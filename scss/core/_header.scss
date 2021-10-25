@@ -1,0 +1,257 @@
+header {
+    width: 100%;
+    height: var(--heightHeader);
+    max-width: $container-max-width;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 300;
+    @include transition($t);
+    &.activehd {
+        background: black;
+        @include transition($t);
+    }
+    .container-fluid {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .logo {
+        .hidden {
+            display: none;
+        }
+    }
+    .menu {
+        display: flex;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        li {
+            height: 100%;
+            a {
+                color: $yellow-cl;
+                height: 100%;
+                @include mid(true);
+                @include text(16px, pb, normal, $white-cl, uppercase);
+                margin: 0 18px;
+                position: relative;
+                overflow: hidden;
+                @include transition($t);
+                &:after {
+                    content: "";
+                    width: 100%;
+                    height: 1px;
+                    background: #fff;
+                    position: absolute;
+                    left: 0;
+                    bottom: 26px;
+                    @include transform(scaleX(0));
+                    @include transform-orgin(left center);
+                    @include transition($t cubic-bezier(0.9, 0.26, 0.28, 0.87));
+                }
+                &:hover {
+                    @include transition($t);
+                    color: $yellow-cl;
+                    &:after {
+                        @include transform(scaleX(1));
+                        @include transform-orgin(right center);
+                        @include transition($t cubic-bezier(0.9, 0.26, 0.28, 0.87));
+                    }
+                }
+                &.active {
+                    color: $yellow-cl;
+                    position: relative;
+                    &:after {
+                        content: "";
+                        width: 100%;
+                        height: 1px;
+                        background: #fff;
+                        position: absolute;
+                        left: 0;
+                        bottom: 26px;
+                         @include transform(initial);
+                         @include transform-orgin(initial);
+                         @include transition(initial cubic-bezier(initial));
+                    }
+                    &:hover {
+                        @include transition(initial);
+                         color: $yellow-cl;
+                        &:after {
+                             @include transform(scaleX(initial));
+                             @include transform-orgin(initial);
+                            @include transition(initial cubic-bezier(initial));
+                        }
+                       
+                    }
+                }
+            }
+           
+        }
+    }
+    .right {
+        display: inline-flex;
+        height: 100%;
+        align-items: center;
+        .lang {
+            height: 100%;
+            position: relative;
+            &__current {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                span {
+                    @include text(16px, pb, 22px, $white-cl, uppercase);
+                    margin-right: 8px;
+                }
+                i {
+                    img {
+                        width: 10px;
+                    }
+                }
+            }
+            &__option {
+                width: 100px;
+                background: $white-cl;
+                position: absolute;
+                padding: 20px;
+                right: 0;
+                top: 30px;
+                text-align: center;
+                top: var(--heightHeader);
+                @include visible(0);
+                a {
+                    padding: 5px 0;
+                    display: block;
+                    @include text($fz-text, pb, 16px, $black-cl, uppercase);
+                    @include transition($t);
+                    cursor: pointer;
+                    &:first-child {
+                        padding-top: 12px;
+                    }
+                    &:last-child {
+                        padding-bottom: 12px;
+                    }
+                    &:hover {
+                        color: $yellow-cl;
+                        @include transition($t);
+                    }
+                }
+            }
+            &.active {
+                .lang__option {
+                    @include visible(1);
+                }
+                color: $yellow-cl;
+                @include transition($t);
+            }
+        }
+        .menu__mobile {
+            display: none;
+            width: 40px;
+            height: 22px;
+            position: relative;
+            cursor: pointer;
+            z-index: 300;
+            margin-left: 20px;
+            span {
+                width: 100%;
+                height: 2px;
+                display: block;
+                background: $yellow-cl;
+                position: absolute;
+                top: 50%;
+                @include transform(translateY(-50%));
+                @include transition($t);
+            }
+            &:before,
+            &:after {
+                content: "";
+                width: 100%;
+                height: 2px;
+                display: block;
+                background: $yellow-cl;
+                @include transform(rotate(0deg) translateY(-50%));
+                @include transition($t);
+            }
+            &:after {
+                position: absolute;
+                bottom: 0;
+            }
+            &.cliked {
+                &:before {
+                    @include transform(rotate(45deg) translate(6px, 8px));
+                    @include transition($t);
+                }
+                span {
+                    opacity: 0;
+                    @include transition($t);
+                }
+                &:after {
+                    @include transform(rotate(-45deg) translate(6px, -8px));
+                    @include transition($t);
+                }
+            }
+        }
+    }
+    .nav {
+        display: none;
+    }
+    @include xs {
+        --heightHeader: 60px;
+        .nav {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            background: $black-cl;
+            position: fixed;
+            top: 0;
+            left: 0;
+            @include transform(initial);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            @include transition($t);
+            ul {
+                flex-direction: column;
+                @include mid();
+                li {
+                    margin: 15px auto;
+                    a {
+                        align-items: center;
+                        color: $white-cl;
+                        text-align: center;
+                    }
+                }
+            }
+            &.active {
+                opacity: 1;
+                pointer-events: none;
+                @include transition($t);
+            }
+        }
+        .menu__mobile {
+            display: block;
+        }
+    }
+    @include sm {
+        .container-fluid {
+            .menu {
+                display: none;
+            }
+            .right {
+                .menu__mobile {
+                    display: block;
+                }
+            }
+        }
+    }
+    /*  @include xs {
+        --heightHeader: 60px;
+        .menu__mobile {
+            display: block;
+        }
+    } */
+}
